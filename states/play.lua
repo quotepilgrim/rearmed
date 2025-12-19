@@ -6,8 +6,7 @@ local input = require("input")
 local history = require("history")
 local list_menu = require("listmenu")
 
-game:add_state("play")
-local state = game.states.play
+local state = game:add_state("play")
 
 local play_menu = list_menu.new({
 	x = 128,

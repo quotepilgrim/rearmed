@@ -10,6 +10,8 @@ local min, max, abs, ceil = math.min, math.max, math.abs, math.ceil
 local repeat_keys = { up = false, down = false, left = false, right = false }
 local repeat_timeout = 0
 
+local state = game:add_state("edit")
+
 local edit_menu = list_menu.new({
 	x = 128,
 	y = 80,
@@ -49,9 +51,6 @@ function cursor:draw()
 		love.graphics.draw(self.sprite, (self.x - 1) * 16 - 10, (self.y - 1) * 16 - 10)
 	end
 end
-
-game:add_state("edit")
-local state = game.states.edit
 
 local function level_select()
 	local items = {}

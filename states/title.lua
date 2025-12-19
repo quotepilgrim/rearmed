@@ -4,8 +4,7 @@ local title
 local title_x, title_y
 local title_menu
 
-game:add_state("title")
-local state = game.states.title
+local state = game:add_state("title")
 
 function state.load()
 	title_menu = list_menu.new({

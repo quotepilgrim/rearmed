@@ -3,8 +3,7 @@ local list_menu = require("listmenu")
 local input = require("input")
 local menu
 
-game:add_state("menu")
-local state = game.states.menu
+local state = game:add_state("menu")
 
 function state.switch(arg)
 	menu = arg or list_menu.new()

@@ -8,11 +8,9 @@ t.scale = 1
 t.ox, t.oy = 0, 0
 t.mousex, t.mousey = 0, 0
 
-t.test_string =
-	"The quick brown fox jumps\nover the lazy dog.\nJACKDAWS LOVE MY\nBIG SPHINX OF QUARTZ.\n1234567890!?@#$%&{[()]};:"
-
 function t:add_state(id)
 	self.states[id] = { id = id }
+	return self.states[id]
 end
 
 function t:resize(w, h)
