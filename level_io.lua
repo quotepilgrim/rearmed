@@ -2,14 +2,10 @@ local t = {}
 
 function t.load(filename)
 	local level = {}
-	local section, new_section, flat
+	local section
 	local separator = "|"
 	local split_pattern = "([^" .. separator .. "]+)"
-	local file = io.open(filename, "r")
-
-	if not file then
-		return
-	end
+	local file = assert(io.open(filename, "r"))
 
 	local function strip(str)
 		return str and str:match("^%s*(.-)%s*$") or ""
@@ -20,37 +16,12 @@ function t.load(filename)
 		if key and value == "" then
 			section = key
 			level[section] = {}
-			new_section = true
-			flat = false
 			return true
 		elseif key then
 			section = nil
-			if not value:find(separator) then
-				level[key] = tonumber(value) or strip(value)
-				return true
-			end
-			level[key] = {}
-			for item in value:gmatch(split_pattern) do
-				table.insert(level[key], tonumber(item) or strip(item))
-			end
+			level[key] = tonumber(value) or strip(value)
 		end
 		if section then
-			if new_section then
-				if not line:find(separator) then
-					flat = true
-				end
-				new_section = false
-			end
-			if flat then
-				if line:find(separator) then
-					return false
-				end
-				table.insert(level[section], tonumber(line) or line)
-				return true
-			end
-			if not line:find(separator) then
-				return false
-			end
 			local row = {}
 			for item in line:gmatch(split_pattern) do
 				table.insert(row, tonumber(item) or strip(item))
@@ -83,18 +54,10 @@ function t.save(level, filename)
 	end
 	table.sort(keys)
 	for _, k in ipairs(keys) do
-		if type(level[k][1]) ~= "table" and type(level[k]) == "table" then
-			file:write(k .. ": " .. table.concat(level[k], "|") .. "\n")
-		elseif type(level[k]) == "table" then
+		if type(level[k]) == "table" then
 			file:write(k .. ":\n")
 			for _, item in ipairs(level[k]) do
-				if #item == 1 and type(item) == "table" then
-					file:write(item[1] .. "|\n")
-				elseif type(item) == "table" then
-					file:write(table.concat(item, "|") .. "\n")
-				else
-					file:write(item .. "\n")
-				end
+				file:write(table.concat(item, "|") .. "\n")
 			end
 		else
 			file:write(k .. ": " .. level[k] .. "\n")
