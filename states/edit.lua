@@ -42,9 +42,6 @@ local doors_menu = list_menu.new({
 local cursor = {}
 
 function cursor:draw()
-	if not self.enabled then
-		-- return
-	end
 	if selector.enabled then
 		love.graphics.draw(self.sprite, (self.sx - 1) * 16 - 2, (self.sy - 1) * 16 - 2)
 	else

@@ -87,7 +87,6 @@ function t:load(player)
 		count = count + 1
 	end
 	self:set(self.list[1])
-	grid = self.data.gid
 end
 
 function t:draw()
