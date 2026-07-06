@@ -29,7 +29,7 @@ local items = love.filesystem.getDirectoryItems(root)
 	print()
 end ]]
 
-function love.load()
+function love.load(_, arg)
 	while #arg > 0 do
 		local v = table.remove(arg)
 		if v == "--debug" then
