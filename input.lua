@@ -22,12 +22,12 @@ M.gamepad = {
 	left = { dpleft = true },
 	right = { dpright = true },
 	action = { a = true },
-	back = { back = true },
+	back = { back = true, b = true },
 	menu = { start = true },
 	reset = {},
 	undo = { back = true },
-	selector = {},
-	pick = {},
+	selector = { y = true },
+	pick = { x = true },
 }
 
 local debug_keyboard = {
