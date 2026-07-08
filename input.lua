@@ -1,18 +1,36 @@
 local game = require("game")
 
-local t = {
-	up = { w = true, up = true, dpup = true },
-	down = { s = true, down = true, dpdown = true },
-	left = { a = true, left = true, dpleft = true },
-	right = { d = true, right = true, dpright = true },
+local M = {}
+
+M.keyboard = {
+	up = { w = true, up = true },
+	down = { s = true, down = true },
+	left = { a = true, left = true },
+	right = { d = true, right = true },
 	action = { space = true, ["return"] = true },
 	back = { escape = true, backspace = true },
 	menu = { escape = true },
 	reset = { r = true },
 	undo = { z = true, backspace = true },
+	selector = { tab = true },
+	pick = { ["'"] = true, p = true },
 }
 
-local d_t = {
+M.gamepad = {
+	up = { dpup = true },
+	down = { dpdown = true },
+	left = { dpleft = true },
+	right = { dpright = true },
+	action = { a = true },
+	back = { back = true },
+	menu = { start = true },
+	reset = {},
+	undo = { back = true },
+	selector = {},
+	pick = {},
+}
+
+local debug_keyboard = {
 	spring = { p = true },
 	edit = { tab = true },
 	next_level = { pagedown = true },
@@ -21,16 +39,16 @@ local d_t = {
 	prev_page = { pageup = true },
 }
 
-function t:load()
+function M:load()
 	if game.debug then
-		for k, v in pairs(d_t) do
-			self[k] = v
+		for k, v in pairs(debug_keyboard) do
+			self.keyboard[k] = v
 		end
 	else
-		for k, _ in pairs(d_t) do
-			self[k] = {}
+		for k, _ in pairs(debug_keyboard) do
+			self.keyboard[k] = {}
 		end
 	end
 end
 
-return t
+return M

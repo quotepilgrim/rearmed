@@ -1,5 +1,4 @@
 local game = require("game")
-local input = require("input")
 local t = {}
 local font, line_height, x, y
 
@@ -90,7 +89,7 @@ t.default_items = {
 	{ "Quit", love.event.quit },
 }
 
-function t.input_on(menu, key)
+function t.input_on(menu, input, key)
 	if input.down[key] then
 		scroll_down(menu, 1)
 	elseif input.next_page[key] then

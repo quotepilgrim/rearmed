@@ -1,7 +1,6 @@
 local game = require("game")
 local list_menu = require("listmenu")
-local title
-local title_x, title_y
+local title, title_x, title_y
 local title_menu
 
 local state = game:add_state("title")
@@ -33,6 +32,6 @@ function state.draw()
 	list_menu.draw(title_menu)
 end
 
-function state.keypressed(key)
-	list_menu.input_on(title_menu, key)
+function state.keypressed(input, key)
+	list_menu.input_on(title_menu, input, key)
 end

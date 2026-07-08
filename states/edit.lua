@@ -1,10 +1,10 @@
 local game = require("game")
 local level = require("level")
 local selector = require("selector")
-local input = require("input")
 local tid = require("tile_ids")
 local list_menu = require("listmenu")
 local drawing = false
+local keyboard
 local mx, my, use_keyboard
 local min, max, abs, ceil = math.min, math.max, math.abs, math.ceil
 local repeat_keys = { up = false, down = false, left = false, right = false }
@@ -103,6 +103,11 @@ function state.load()
 	cursor.sx = 1
 	cursor.sy = 4
 	use_keyboard = true
+
+	local input = require("input")
+	keyboard = input.keyboard
+
+	input = nil
 end
 
 function state.update(dt)
@@ -141,7 +146,7 @@ function state.update(dt)
 	else
 		for k, v in pairs(repeat_keys) do
 			if v then
-				state.input_on(k)
+				state.input_on(keyboard, k)
 				repeat_timeout = 0.1
 				break
 			end
@@ -169,13 +174,15 @@ function state.draw()
 	cursor:draw()
 end
 
-function state.input_on(key)
+function state.input_on(input, key)
 	use_keyboard = true
+
 	for k, _ in pairs(repeat_keys) do
 		repeat_keys[k] = input[k][key] or false
 		repeat_timeout = 0.25
 	end
-	if input.edit[key] then
+
+	if input.selector[key] then
 		selector.enabled = not selector.enabled
 	elseif input.next_level[key] then
 		level:next()
@@ -209,7 +216,7 @@ function state.input_on(key)
 		else
 			drawing = true
 		end
-	elseif key == "'" then
+	elseif input.pick[key] then
 		selector.pick = level.data.grid[my][mx]
 	elseif key == "m" then
 		level_select()
@@ -241,7 +248,7 @@ function state.input_on(key)
 	end
 end
 
-function state.input_off(key)
+function state.input_off(input, key)
 	if input.action[key] then
 		drawing = false
 	end
@@ -273,17 +280,17 @@ function state.mousereleased(x, y, button)
 	end
 end
 
-function state.keypressed(key)
-	return state.input_on(key)
+function state.keypressed(input, key)
+	return state.input_on(input, key)
 end
-function state.keyreleased(key)
-	return state.input_off(key)
+function state.keyreleased(input, key)
+	return state.input_off(input, key)
 end
-function state.gamepadpressed(_, button)
-	return state.input_on(button)
+function state.gamepadpressed(input, button)
+	return state.input_on(input, button)
 end
-function state.gamepadreleased(_, button)
-	return state.input_off(button)
+function state.gamepadreleased(input, button)
+	return state.input_off(input, button)
 end
 
 function state.mousemoved(_, _, dx, dy)

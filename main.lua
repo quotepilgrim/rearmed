@@ -71,25 +71,25 @@ end
 
 function love.keypressed(key)
 	if game.current.keypressed then
-		return game.current.keypressed(key)
+		return game.current.keypressed(input.keyboard, key)
 	end
 end
 
 function love.keyreleased(key)
 	if game.current.keyreleased then
-		return game.current.keyreleased(key)
+		return game.current.keyreleased(input.keyboard, key)
 	end
 end
 
 function love.gamepadpressed(_, button)
 	if game.current.gamepadpressed then
-		return game.current.gamepadpressed(button)
+		return game.current.gamepadpressed(input.gamepad, button)
 	end
 end
 
 function love.gamepadreleased(_, button)
 	if game.current.gamepadreleased then
-		return game.current.gamepadreleased(button)
+		return game.current.gamepadreleased(input.gamepad, button)
 	end
 end
 

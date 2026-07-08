@@ -1,6 +1,5 @@
 local game = require("game")
 local list_menu = require("listmenu")
-local input = require("input")
 local menu
 
 local state = game:add_state("menu")
@@ -21,8 +20,8 @@ function state.update(dt)
 	--
 end
 
-function state.keypressed(key)
-	list_menu.input_on(menu, key)
+function state.keypressed(input, key)
+	list_menu.input_on(menu, input, key)
 	if input.back[key] then
 		game:set_state(game.prev.id)
 	end

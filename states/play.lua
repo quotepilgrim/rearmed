@@ -2,7 +2,6 @@ local game = require("game")
 local level = require("level")
 local player = require("player")
 local selector = require("selector")
-local input = require("input")
 local history = require("history")
 local list_menu = require("listmenu")
 
@@ -38,7 +37,7 @@ function state.draw()
 	love.graphics.pop()
 end
 
-function state.input_on(key)
+function state.input_on(input, key)
 	if input.edit[key] then
 		game:set_state("edit")
 	elseif input.next_level[key] then
@@ -72,21 +71,21 @@ function state.input_on(key)
 	end
 end
 
-function state.keypressed(key)
-	player:input_on(key)
-	state.input_on(key)
+function state.keypressed(input, key)
+	player:input_on(input, key)
+	state.input_on(input, key)
 end
 
-function state.keyreleased(key)
-	player:input_off(key)
+function state.keyreleased(input, key)
+	player:input_off(input, key)
 end
 
-function state.gamepadpressed(_, button)
-	player:input_on(button)
+function state.gamepadpressed(input, button)
+	player:input_on(input, button)
 end
 
-function state.gamepadreleased(_, button)
-	player:input_off(button)
+function state.gamepadreleased(input, button)
+	player:input_off(input, button)
 end
 
 function state.mousepressed(x, y, button)

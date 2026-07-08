@@ -1,4 +1,3 @@
-local input = require("input")
 local tile_ids = require("tile_ids")
 
 local timer = 0
@@ -143,7 +142,7 @@ function t.states.idle.update(player, dt)
 	end
 end
 
-function t:input_on(key)
+function t:input_on(input, key)
 	for k, d in pairs(dirs) do
 		if input[k][key] then
 			next_dir = d
@@ -158,7 +157,7 @@ function t:input_on(key)
 	end
 end
 
-function t:input_off(key)
+function t:input_off(input, key)
 	local remove
 	for k, d in pairs(dirs) do
 		if input[k][key] then
